@@ -186,11 +186,7 @@ def process_dataframe_A(df, map_category, map_cluster, map_period, modo="MX"):
     df = df_full.iloc[:, :31].copy()
     df.iloc[:, 29] = 0
     df.iloc[:, 30] = 0
-    # FIX: col[2] es city_id (entero) — la fecha es col[5] (date_value).
-    # Antes se aplicaba to_datetime sobre city_id, convirtiendo p.ej. 52010100 ns → 1970-01-01.
-    # city_id se convierte a int64; date_value (col[5]) se formatea como 'YYYY-MM-DD'.
-    df.iloc[:, 2] = pd.to_numeric(df.iloc[:, 2], errors='coerce').astype('Int64')
-    df.iloc[:, 5] = pd.to_datetime(df.iloc[:, 5], errors='coerce').dt.strftime('%Y-%m-%d')
+    df.iloc[:, 2] = pd.to_datetime(df.iloc[:, 2], errors='coerce').dt.strftime('%Y-%m-%d')
     
     for col_idx in [26, 27, 28]:
         # Asegurarnos de limpiar comas
